@@ -4,18 +4,27 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
 
-	private GameObject target;
+	[SerializeField] private float moveSpeed;
+
+	private GameObject player;
+	public bool isPlayerSeen { get; set; }
 
 	private void Awake()
 	{
-		target = GameObject.FindWithTag(Tags.Target).gameObject;
+		isPlayerSeen = false;
+		player = GameObject.FindWithTag(Tags.Player).gameObject;
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		MoveTowardPlayer();
 	}
 
-	private void OnMouseOver()
+	private void MoveTowardPlayer()
 	{
-		if (Input.GetMouseButtonDown(0))
+		if (isPlayerSeen)
 		{
-			Instantiate(target, transform.position, Quaternion.identity);
+			transform.root.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), player.transform.position, moveSpeed * Time.deltaTime);
 		}
 	}
 }

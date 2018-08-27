@@ -7,5 +7,6 @@ public static class Tags {
 	public const string Targetable = "Targetable";
 	public const string Target = "Target";
 	public const string Player = "Player";
+	public const string GameController = "GameController";
 
 }
