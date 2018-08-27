@@ -7,11 +7,11 @@ public class EnemyController : MonoBehaviour {
 	[SerializeField] private float moveSpeed;
 
 	private GameObject player;
-	public bool isPlayerSeen { get; set; }
+	public bool IsPlayerSeen { get; set; }
 
 	private void Awake()
 	{
-		isPlayerSeen = false;
+		IsPlayerSeen = false;
 		player = GameObject.FindWithTag(Tags.Player).gameObject;
 	}
 	
@@ -22,7 +22,7 @@ public class EnemyController : MonoBehaviour {
 
 	private void MoveTowardPlayer()
 	{
-		if (isPlayerSeen)
+		if (IsPlayerSeen)
 		{
 			transform.root.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), player.transform.position, moveSpeed * Time.deltaTime);
 		}

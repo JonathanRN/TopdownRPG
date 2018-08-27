@@ -6,11 +6,12 @@ public class PlayerController : MonoBehaviour {
 
 	[SerializeField] private float playerSpeed = 5f;
 
-	private void Awake()
+	private void Update()
 	{
+		ProcessPlayerMovement();
 	}
 
-	private void Update()
+	private void ProcessPlayerMovement()
 	{
 		var root = transform.root;
 		if (Input.GetKey(KeyCode.A))

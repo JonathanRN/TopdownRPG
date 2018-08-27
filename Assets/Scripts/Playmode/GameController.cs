@@ -4,6 +4,5 @@ using UnityEngine;
 
 public static class GameController {
 
-	public static bool isTargetSet { get; set; }
 
 }

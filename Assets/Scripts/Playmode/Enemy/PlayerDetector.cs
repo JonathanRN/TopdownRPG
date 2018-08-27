@@ -14,13 +14,13 @@ public class PlayerDetector : MonoBehaviour {
 	private void OnTriggerEnter2D(Collider2D other)
 	{
 		Debug.Log("I've seen the player!");
-		enemyController.isPlayerSeen = true;
+		enemyController.IsPlayerSeen = true;
 	}
 
 	private void OnTriggerExit2D(Collider2D other)
 	{
 		Debug.Log("I've lost the player!");
-		enemyController.isPlayerSeen = false;
+		enemyController.IsPlayerSeen = false;
 	}
 
 }
