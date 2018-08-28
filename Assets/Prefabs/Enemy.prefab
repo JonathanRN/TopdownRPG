@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4458779666386794}
   - component: {fileID: 114400603978502060}
+  - component: {fileID: 114535090577463664}
   m_Layer: 0
   m_Name: Control
   m_TagString: Untagged
@@ -37,7 +38,7 @@ GameObject:
   - component: {fileID: 4174607562208904}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -194,6 +195,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
+--- !u!114 &114535090577463664
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1126337439258648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5afb1f1dbe51cd4e9ff455affe4d241, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  health: 10
 --- !u!212 &212359854015170650
 SpriteRenderer:
   m_ObjectHideFlags: 1

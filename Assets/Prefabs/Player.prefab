@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4202986907221796}
   - component: {fileID: 114591164748684444}
+  - component: {fileID: 114910205735770752}
   m_Layer: 0
   m_Name: Control
   m_TagString: Untagged
@@ -157,7 +158,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b43c787117cf8514d986f8aa9c1a3169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 10
+  playerMoveSpeed: 5
+--- !u!114 &114910205735770752
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1468914428342768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5afb1f1dbe51cd4e9ff455affe4d241, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  health: 100
 --- !u!212 &212495039390099276
 SpriteRenderer:
   m_ObjectHideFlags: 1

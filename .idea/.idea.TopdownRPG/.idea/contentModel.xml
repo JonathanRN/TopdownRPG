@@ -15,11 +15,17 @@
               <e p="PlayerDetector.cs" t="Include" />
             </e>
             <e p="GameController.cs" t="Include" />
+            <e p="HealthController.cs" t="Include" />
             <e p="Player" t="Include">
               <e p="PlayerController.cs" t="Include" />
+              <e p="SkillController.cs" t="Include" />
             </e>
             <e p="Target" t="Include">
+              <e p="HealthBarTargetController.cs" t="Include" />
               <e p="TargetController.cs" t="Include" />
+            </e>
+            <e p="UI" t="Include">
+              <e p="HealthBarController.cs" t="Include" />
             </e>
             <e p="Utils" t="Include">
               <e p="Values" t="Include">
