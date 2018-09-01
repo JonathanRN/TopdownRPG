@@ -9,5 +9,7 @@ public static class Tags {
 	public const string Player = "Player";
 	public const string GameController = "GameController";
 	public const string Enemy = "Enemy";
+	public const string ErrorMessage = "ErrorMessage";
+	public const string Canvas = "Canvas";
 
 }

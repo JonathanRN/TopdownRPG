@@ -4,23 +4,27 @@ using UnityEngine;
 
 public class PlayerDetector : MonoBehaviour {
 
-	private EnemyController enemyController;
+	private Enemy enemy;
 
 	private void Awake()
 	{
-		enemyController = transform.root.GetComponentInChildren<EnemyController>();
+		enemy = transform.root.GetComponentInChildren<Enemy>();
 	}
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
+		if (other.GetComponent<HitSensor>() == null) return;
+		
 		Debug.Log("I've seen the player!");
-		enemyController.IsPlayerSeen = true;
+		enemy.IsPlayerSeen = true;
 	}
 
 	private void OnTriggerExit2D(Collider2D other)
 	{
+		if (other.GetComponent<HitSensor>() == null) return;
+		
 		Debug.Log("I've lost the player!");
-		enemyController.IsPlayerSeen = false;
+		enemy.IsPlayerSeen = false;
 	}
 
 }

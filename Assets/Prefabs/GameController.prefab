@@ -53,5 +53,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPrefab: {fileID: 1935133253581516, guid: 51dc35a06a2b39945a335437ddad9ca0,
     type: 2}
-  isTargetSet: 0
   currentTarget: {fileID: 0}
+  targetFrame: {fileID: 0}

@@ -7,6 +7,9 @@ TagManager:
   - Targetable
   - Target
   - Enemy
+  - Spell
+  - ErrorMessage
+  - Canvas
   layers:
   - Default
   - TransparentFX

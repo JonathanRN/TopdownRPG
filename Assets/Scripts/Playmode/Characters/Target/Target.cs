@@ -4,17 +4,26 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityScript.Lang;
 
-public class TargetController : MonoBehaviour {
+public delegate void TargetUiChangeEventHandler();
+
+public class Target : MonoBehaviour {
 
 	[SerializeField] private GameObject targetPrefab;
 	[SerializeField] public GameObject currentTarget;
 	[SerializeField] private GameObject targetFrame;
 
 	private RaycastHit2D[] hits;
+	
+	public event TargetUiChangeEventHandler OnChangeUi;
+
+	private void NotifyUiChange()
+	{
+		if (OnChangeUi != null) OnChangeUi();
+	}
 
 	private void Awake()
 	{
-		DrawTargetUI();
+		UpdateTargetUi();
 	}
 
 	void Update()
@@ -29,6 +38,7 @@ public class TargetController : MonoBehaviour {
 		if (IsTargetableUnderMouse())
 		{
 			InstantiateTarget();
+			UpdateTargetUi();
 		}
 		else
 		{
@@ -38,15 +48,18 @@ public class TargetController : MonoBehaviour {
 
 	public void RemoveTarget()
 	{
-		if (!GameObject.FindWithTag(Tags.Target)) return;
-		
-		Destroy(GameObject.FindWithTag(Tags.Target).gameObject);
+		if (IsSomethingTargeted())
+		{
+			Destroy(GameObject.FindWithTag(Tags.Target).gameObject);
+		}
 		currentTarget = null;
-		DrawTargetUI();
+		UpdateTargetUi();
 	}
 
 	private bool IsTargetableUnderMouse()
 	{
+		hits = null;
+		
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
 
@@ -66,13 +79,10 @@ public class TargetController : MonoBehaviour {
 				RemoveTarget();
 				
 				Instantiate(targetPrefab, other.position, Quaternion.identity, other);
-				currentTarget = other.transform.root.gameObject;
-				DrawTargetUI();
+				currentTarget = other.gameObject;
+				return;
 			}
-			else
-			{
-				RemoveTarget();
-			}
+			RemoveTarget();
 		}
 	}
 
@@ -81,25 +91,14 @@ public class TargetController : MonoBehaviour {
 		return IsSomethingTargeted() && currentTarget.CompareTag(Tags.Enemy);
 	}
 
-	public void HitAttackableTarget(int hit)
-	{
-		if (IsTargetAttackable())
-		{
-			currentTarget.GetComponentInChildren<HealthController>().Hit(hit);
-		}
-		else
-		{
-			Debug.Log("No target or target is friendly!");
-		}
-	}
-
 	public bool IsSomethingTargeted()
 	{
 		return currentTarget != null;
 	}
 
-	private void DrawTargetUI()
+	private void UpdateTargetUi()
 	{
 		targetFrame.SetActive(IsSomethingTargeted());
+		NotifyUiChange();
 	}
 }

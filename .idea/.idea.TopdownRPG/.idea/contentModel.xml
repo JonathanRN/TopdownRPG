@@ -3,6 +3,7 @@
   <component name="ContentModelStore">
     <e p="\6046fae7" t="IncludeRecursive" />
     <e p="\app" t="IncludeRecursive" />
+    <e p="C:\Users\Jo\.Rider2018.2\config\extensions" t="IncludeRecursive" />
     <e p="C:\Users\Jo\.Rider2018.2\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\Jo\.Rider2018.2\system\resharper-host\Local\Transient\ReSharperHost\v182\SolutionCaches\_TopdownRPG.561645185.00" t="ExcludeRecursive" />
     <e p="C:\Users\Jo\Documents\Unity Projects\TopdownRPG" t="IncludeRecursive">
@@ -10,26 +11,49 @@
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
           <e p="Playmode" t="Include">
-            <e p="Enemy" t="Include">
-              <e p="EnemyController.cs" t="Include" />
-              <e p="PlayerDetector.cs" t="Include" />
+            <e p="Characters" t="Include">
+              <e p="Cast.cs" t="Include" />
+              <e p="Enemy" t="Include">
+                <e p="Enemy.cs" t="Include" />
+                <e p="PlayerDetector.cs" t="Include" />
+              </e>
+              <e p="Health.cs" t="Include" />
+              <e p="MeleeRangeController.cs" t="Include" />
+              <e p="Mover.cs" t="Include" />
+              <e p="Player" t="Include">
+                <e p="HandController.cs" t="Include" />
+                <e p="Player.cs" t="Include" />
+              </e>
+              <e p="RootMover.cs" t="Include" />
+              <e p="Spells" t="Include">
+                <e p="Castable.cs" t="Include" />
+              </e>
+              <e p="StatsController.cs" t="Include" />
+              <e p="Target" t="Include">
+                <e p="HealthBarTarget.cs" t="Include" />
+                <e p="Target.cs" t="Include" />
+              </e>
             </e>
             <e p="GameController.cs" t="Include" />
-            <e p="HealthController.cs" t="Include" />
-            <e p="Player" t="Include">
-              <e p="PlayerController.cs" t="Include" />
-              <e p="SkillController.cs" t="Include" />
-            </e>
-            <e p="Target" t="Include">
-              <e p="HealthBarTargetController.cs" t="Include" />
-              <e p="TargetController.cs" t="Include" />
-            </e>
             <e p="UI" t="Include">
-              <e p="HealthBarController.cs" t="Include" />
+              <e p="ErrorMessage.cs" t="Include" />
+              <e p="FloatingDamage.cs" t="Include" />
+              <e p="HealthBarPlayer.cs" t="Include" />
+              <e p="PlayerCastBar.cs" t="Include" />
+              <e p="TargetCastBar.cs" t="Include" />
             </e>
             <e p="Utils" t="Include">
+              <e p="Senses" t="Include">
+                <e p="HitSensor.cs" t="Include" />
+                <e p="HitStimulus.cs" t="Include" />
+                <e p="MeleeRangeStimulus.cs" t="Include" />
+              </e>
               <e p="Values" t="Include">
+                <e p="Castables.cs" t="Include" />
+                <e p="PrimaryStats.cs" t="Include" />
+                <e p="SecondaryStats.cs" t="Include" />
                 <e p="Tags.cs" t="Include" />
+                <e p="Targets.cs" t="Include" />
               </e>
             </e>
           </e>
