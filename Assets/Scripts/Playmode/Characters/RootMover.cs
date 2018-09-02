@@ -22,11 +22,13 @@ public class RootMover : Mover
 		rootTransform.Translate(direction.normalized * moveSpeed * Time.deltaTime);
 	}
 
-	public override void Rotate(float direction)
+	public override void Rotate(float direction, Transform transformToRotate = null)
 	{
-		rootTransform.Rotate(
+		var transformRotate = transformToRotate == null ? rootTransform : transformToRotate;
+		
+		transformRotate.Rotate(
 			Vector3.forward,
-			(direction < 0 ? rotateSpeed : -rotateSpeed) * Time.deltaTime
+			(direction < 0 ? -rotateSpeed : rotateSpeed) * Time.deltaTime
 		);
 	}
 
@@ -48,6 +50,27 @@ public class RootMover : Mover
 		{
 			Rotate(-1f * Time.deltaTime);
 		}
+	}
+	
+	public override void RotateSpriteTowardsTarget(Transform target, Transform transformToRotate)
+	{
+		var vectorBetweenEnemy = new Vector3(transformToRotate.position.x - target.transform.position.x,
+			transformToRotate.position.y - target.transform.position.y);
+		if (Vector3.Dot(vectorBetweenEnemy, transformToRotate.right) < -0.5)
+		{
+			Rotate(1f * Time.deltaTime, transformToRotate);
+		}
+		else if (Vector3.Dot(vectorBetweenEnemy, transformToRotate.right) > 0.5)
+		{
+			Rotate(-1f * Time.deltaTime, transformToRotate);
+		}
+	}
+
+	public override void RotateSpriteTowardsMouse(Transform spriteToRotate)
+	{
+		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		Vector3 perpendicular = spriteToRotate.position - mousePos;
+		spriteToRotate.rotation = Quaternion.LookRotation(Vector3.forward, perpendicular);
 	}
 
 	public override void MoveToExactTarget(Transform target)

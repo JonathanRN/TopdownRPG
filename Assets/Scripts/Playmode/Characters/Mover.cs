@@ -25,11 +25,15 @@ public abstract class Mover : MonoBehaviour
 
     public abstract void Move(Vector3 direction);
 
-    public abstract void Rotate(float direction);
+    public abstract void Rotate(float direction, Transform transformToRotate = null);
 
     public abstract void MoveTowardsTarget(Transform target);
 
     public abstract void RotateTowardsTarget(Transform target);
+
+    public abstract void RotateSpriteTowardsTarget(Transform target, Transform transformToRotate);
+
+    public abstract void RotateSpriteTowardsMouse(Transform spriteToRotate);
 
     public abstract void MoveToExactTarget(Transform target);
 

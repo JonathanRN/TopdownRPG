@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 	private Castable castable;
 	private Mover mover;
 	private Target target;
+	private SpriteRenderer spriteRenderer;
 
 	private void Awake()
 	{
@@ -19,15 +20,21 @@ public class Player : MonoBehaviour
 		cast = GetComponent<Cast>();
 		mover = GetComponent<RootMover>();
 		target = GameObject.FindWithTag(Tags.GameController).GetComponent<Target>();
+		spriteRenderer = transform.root.GetComponentInChildren<SpriteRenderer>();
 	}
 
 	private void Update()
 	{
 		ProcessPlayerMovement();
-		RotateTowardsTarget();
+		UpdatePlayerRotation();
 
+		ProcessPlayerAbilities();
+	}
+
+	private void ProcessPlayerAbilities()
+	{
 		if (cast.IsCasting) return;
-		
+
 		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
 			cast.CastSpellAtAttackableTarget(Castables.Fireball);
@@ -40,7 +47,6 @@ public class Player : MonoBehaviour
 
 	private void ProcessPlayerMovement()
 	{
-		//TODO rotation without affecting movement
 		if (Input.GetKey(KeyCode.A))
 		{
 			mover.Move(Vector3.left);
@@ -63,11 +69,15 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	private void RotateTowardsTarget()
+	private void UpdatePlayerRotation()
 	{
 		if (target.IsSomethingTargeted())
 		{
-			mover.RotateTowardsTarget(target.currentTarget.transform.root);
+			mover.RotateSpriteTowardsTarget(target.currentTarget.transform.root, spriteRenderer.gameObject.transform);
+		}
+		else
+		{
+			mover.RotateSpriteTowardsMouse(spriteRenderer.gameObject.transform);
 		}
 	}
 }
