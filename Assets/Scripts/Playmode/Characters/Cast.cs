@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void CastEventHandler(int cost);
+
 public class Cast : MonoBehaviour
 {
 	[SerializeField] private GameObject[] castablePrefabs;
 
+	public event CastEventHandler OnCast;
+
 	private Target target;
-	private Castable castable;
+	private Spell spell;
+	private Resource resource;
 	private StatsController statsController;
 	private ErrorMessage errorMessage;
 	
@@ -26,19 +31,18 @@ public class Cast : MonoBehaviour
 		target = GameObject.FindWithTag(Tags.GameController).GetComponent<Target>();
 		statsController = GetComponent<StatsController>();
 		errorMessage = GameObject.FindWithTag(Tags.ErrorMessage).GetComponent<ErrorMessage>();
+		resource = GetComponent<Resource>();
 	}
 
-	private void CalculateHaste()
-	{
-		var haste = (statsController.Haste * castable.CastTime) / 100f;
-		castTimeAfterHaste = castable.CastTime - haste;
-	}
-
-	public void CastSpellAtAttackableTarget(Castables name)
+	public void CastSpellAtAttackableTarget(Spells name)
 	{
 		if (target.IsTargetAttackable())
 		{
-			castable = GetCastableWithName(name);
+			spell = GetCastableWithName(name);
+			if (!resource.CanCastSpell(spell))
+			{
+				errorMessage.Show("Not enough " + resource.GetResourceType() + "!");
+			}
 			StartCasting();
 		}
 		else
@@ -47,15 +51,17 @@ public class Cast : MonoBehaviour
 		}
 	}
 
-	public void CastSpellAtPlayer(Castables name)
+	public void CastSpellAtPlayer(Spells name)
 	{
-		castable = GetCastableWithName(name);
+		spell = GetCastableWithName(name);
 		StartCasting();
 	}
 
 	private void StartCasting()
 	{
-		CalculateHaste();
+		if (!resource.CanCastSpell(spell)) return;
+		
+		castTimeAfterHaste = statsController.GetCalculatedHaste(spell.CastTime);
 
 		IsCasting = true;
 		CastTimeLeft = castTimeAfterHaste;
@@ -83,25 +89,25 @@ public class Cast : MonoBehaviour
 
 	private void InstantiateProjectile()
 	{
-		var instance = Instantiate(castable.transform.parent.gameObject, transform.position, transform.rotation);
+		var instance = Instantiate(spell.transform.parent.gameObject, transform.position, transform.rotation);
 		
 		if (transform.root.gameObject.CompareTag(Tags.Enemy))
 		{
-			instance.GetComponentInChildren<Castable>().targetToCastTo = Targets.Player;
+			instance.GetComponentInChildren<Spell>().targetToCastTo = Targets.Player;
 		}
 		else if (transform.root.gameObject.CompareTag(Tags.Player))
 		{
-			instance.GetComponentInChildren<Castable>().targetToCastTo = Targets.Enemy;
+			instance.GetComponentInChildren<Spell>().targetToCastTo = Targets.Enemy;
 		}
-		
+		NotifyCast();
 	}
 
-	public Castable GetCastableWithName(Castables name)
+	public Spell GetCastableWithName(Spells name)
 	{
-		//Ugly as fuck, but it works for now
+		//TODO Ugly as fuck, but it works for now
 		foreach (var castablePrefab in castablePrefabs)
 		{
-			var castable = castablePrefab.GetComponentInChildren<Castable>();
+			var castable = castablePrefab.GetComponentInChildren<Spell>();
 			if (castable.Name == name)
 			{
 				return castable;
@@ -113,12 +119,12 @@ public class Cast : MonoBehaviour
 
 	public float GetCastableCastTime()
 	{
-		return castable != null ? castTimeAfterHaste : -1f;
+		return spell != null ? castTimeAfterHaste : -1f;
 	}
 
-	public Castables GetCastableName()
+	public Spells GetCastableName()
 	{
-		return castable != null ? castable.Name : Castables.None;
+		return spell != null ? spell.Name : Spells.None;
 	}
 
 	public void InterruptCasting()
@@ -128,10 +134,15 @@ public class Cast : MonoBehaviour
 		errorMessage.Show("Casting interrupted!");
 	}
 
-	public Castables ChooseRandomCastable()
+	public Spells ChooseRandomCastable()
 	{
 		int random = Random.Range(0, castablePrefabs.Length);
 
-		return castablePrefabs[random].GetComponentInChildren<Castable>().Name;
+		return castablePrefabs[random].GetComponentInChildren<Spell>().Name;
+	}
+	
+	private void NotifyCast()
+	{
+		if (OnCast != null) OnCast(spell.Cost);
 	}
 }

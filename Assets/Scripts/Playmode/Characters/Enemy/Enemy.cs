@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : MonoBehaviour
+{
 
-	private GameObject player;
-	private Mover mover;
+	[SerializeField] private EnemyType enemyType;
+	
 	private HitSensor hitSensor;
 	private Cast cast;
+	private Player player;
+	private Mover mover;
+	private AutoAttack autoAttack;
 	
 	public bool IsPlayerSeen { get; set; }
 
@@ -18,11 +22,11 @@ public class Enemy : MonoBehaviour {
 
 	private void InitializeComponents()
 	{
-		IsPlayerSeen = false;
-		player = GameObject.FindWithTag(Tags.Player).gameObject;
-		mover = GetComponent<RootMover>();
 		hitSensor = transform.parent.GetComponentInChildren<HitSensor>();
 		cast = GetComponent<Cast>();
+		autoAttack = GetComponent<AutoAttack>();
+		player = GameObject.FindWithTag(Tags.Player).GetComponentInChildren<Player>();
+		mover = GetComponent<RootMover>();
 	}
 
 	private void OnEnable()
@@ -44,9 +48,26 @@ public class Enemy : MonoBehaviour {
 	private void Update () {
 		if (IsPlayerSeen)
 		{
-			//mover.MoveToExactTarget(player.transform);
-			if (cast.IsCasting) return;
-			cast.CastSpellAtPlayer(cast.ChooseRandomCastable());
+			if (IsEnemyType(EnemyType.Melee))
+			{
+				mover.MoveToExactTarget(player.transform);
+				
+				if (autoAttack.IsAttacking) return;
+				autoAttack.AutoAttackAtPlayer();
+			}
+			else
+			{
+				if (cast.IsCasting) return;
+				
+				//TODO move towards player if out of mana
+				var spell = cast.ChooseRandomCastable();
+				cast.CastSpellAtPlayer(spell);
+			}
 		}
+	}
+
+	public bool IsEnemyType(EnemyType enemyType)
+	{
+		return this.enemyType == enemyType;
 	}
 }

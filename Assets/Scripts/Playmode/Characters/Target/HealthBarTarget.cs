@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HealthBarTarget : MonoBehaviour
 {
-	private Target _target;
+	private Target target;
 
 	private Text healthText;
 	private Slider healthBar;
@@ -20,24 +20,24 @@ public class HealthBarTarget : MonoBehaviour
 
 	private void InitializeComponents()
 	{
-		_target = GameObject.FindWithTag(Tags.GameController).GetComponent<Target>();
+		target = GameObject.FindWithTag(Tags.GameController).GetComponent<Target>();
 
 		healthBar = GetComponentInChildren<Slider>();
 		healthText = GetComponentInChildren<Text>();
 
-		hitSensor = _target.currentTarget.GetComponentInChildren<HitSensor>();
+		hitSensor = target.currentTarget.GetComponentInChildren<HitSensor>();
 	}
 
 	private void OnEnable()
 	{
 		hitSensor.OnHit += OnHit;
-		_target.OnChangeUi += OnChangeUi;
+		target.OnChangeUi += OnChangeUi;
 	}
 
 	private void OnDisable()
 	{
 		hitSensor.OnHit -= OnHit;
-		_target.OnChangeUi += OnChangeUi;
+		target.OnChangeUi += OnChangeUi;
 	}
 
 	private void OnChangeUi()
@@ -52,9 +52,9 @@ public class HealthBarTarget : MonoBehaviour
 
 	private void RefreshValues()
 	{
-		if (_target.IsSomethingTargeted())
+		if (target.IsSomethingTargeted())
 		{
-			_health = _target.currentTarget.GetComponentInChildren<Health>();
+			_health = target.currentTarget.GetComponentInChildren<Health>();
 		}
 
 		if (_health == null) return;

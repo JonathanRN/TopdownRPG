@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Castables {
-
+public enum EnemyType {
+	
 	None,
-	Fireball,
-	Frostbolt,
-	LightningStrike
+	Caster,
+	Melee
 }

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Castable : MonoBehaviour
+public class Spell : MonoBehaviour
 {
 	[Header("Variables")]
-	[SerializeField] public Castables Name;
+	[SerializeField] public Spells Name;
 	[SerializeField] public float CastTime;
 	[SerializeField] public int Damage;
+	[SerializeField] public int Cost;
 	
 	public Targets targetToCastTo { get; set; }
 
@@ -54,20 +55,20 @@ public class Castable : MonoBehaviour
 	{
 		if (targetToCastTo == Targets.Player)
 		{
-			MoveCastableTowardsPlayer();
+			MoveSpellTowardsPlayer();
 		}
 		else if (targetToCastTo == Targets.Enemy)
 		{
-			MoveCastableTowardsEnemy();
+			MoveSpellTowardsEnemy();
 		}
 	}
 
-	private void MoveCastableTowardsPlayer()
+	private void MoveSpellTowardsPlayer()
 	{
 		mover.MoveToExactTarget(player.transform);
 	}
 
-	private void MoveCastableTowardsEnemy()
+	private void MoveSpellTowardsEnemy()
 	{
 		if (_target.IsSomethingTargeted())
 		{

@@ -9,11 +9,11 @@ public class HitStimulus : MonoBehaviour {
 
 	public event HitStimulusEventHandler OnHit;
 
-	private Castable castable;
+	private Spell _spell;
 
 	private void Awake()
 	{
-		castable = transform.root.GetComponentInChildren<Castable>();
+		_spell = transform.root.GetComponentInChildren<Spell>();
 	}
 
 	private void NotifyHit()
@@ -25,16 +25,16 @@ public class HitStimulus : MonoBehaviour {
 	{
 		if (other.GetComponent<HitSensor>() == null) return;
 
-		if (castable.targetToCastTo == Targets.Enemy)
+		if (_spell.targetToCastTo == Targets.Enemy)
 		{
 			if (!other.transform.root.CompareTag(Tags.Enemy)) return;
 		}
-		else if (castable.targetToCastTo == Targets.Player)
+		else if (_spell.targetToCastTo == Targets.Player)
 		{
 			if (!other.transform.root.CompareTag(Tags.Player)) return;
 		}
 
-		var hit = castable.Damage;
+		var hit = _spell.Damage;
 
 		other.GetComponent<HitSensor>()?.Hit(hit);
 		NotifyHit();

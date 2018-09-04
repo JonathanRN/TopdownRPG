@@ -154,6 +154,7 @@ MonoBehaviour:
   Name: 2
   CastTime: 3
   Damage: 4
+  Cost: 20
 --- !u!114 &114795920875187594
 MonoBehaviour:
   m_ObjectHideFlags: 1

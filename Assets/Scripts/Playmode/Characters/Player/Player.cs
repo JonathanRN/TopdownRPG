@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour 
 {
 	private Cast cast;
-	private Castable castable;
+	private Spell _spell;
 	private Mover mover;
 	private Target target;
 	private SpriteRenderer spriteRenderer;
@@ -37,11 +37,11 @@ public class Player : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
-			cast.CastSpellAtAttackableTarget(Castables.Fireball);
+			cast.CastSpellAtAttackableTarget(Spells.Fireball);
 		}
 		else if (Input.GetKeyDown(KeyCode.Alpha2))
 		{
-			cast.CastSpellAtAttackableTarget(Castables.Frostbolt);
+			cast.CastSpellAtAttackableTarget(Spells.Frostbolt);
 		}
 	}
 

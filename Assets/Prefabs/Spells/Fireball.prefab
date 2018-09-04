@@ -165,6 +165,7 @@ MonoBehaviour:
   Name: 1
   CastTime: 2
   Damage: 2
+  Cost: 10
 --- !u!212 &212335960804261394
 SpriteRenderer:
   m_ObjectHideFlags: 1

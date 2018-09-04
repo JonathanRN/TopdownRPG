@@ -14,16 +14,16 @@ public class PlayerDetector : MonoBehaviour {
 	private void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.GetComponent<HitSensor>() == null) return;
+		if (other.transform.root.CompareTag(Tags.Enemy)) return;
 		
-		Debug.Log("I've seen the player!");
 		enemy.IsPlayerSeen = true;
 	}
 
 	private void OnTriggerExit2D(Collider2D other)
 	{
 		if (other.GetComponent<HitSensor>() == null) return;
+		if (other.transform.root.CompareTag(Tags.Enemy)) return;
 		
-		Debug.Log("I've lost the player!");
 		enemy.IsPlayerSeen = false;
 	}
 

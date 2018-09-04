@@ -13,4 +13,10 @@ public class StatsController : MonoBehaviour
 	[SerializeField] public float Haste = 1;
 	[SerializeField] public float CriticalStrike = 1;
 	[SerializeField] public float Stamina = 1;
+	
+	public float GetCalculatedHaste(float time)
+	{
+		var haste = (Haste * time) / 100f;
+		return (time - haste);
+	}
 }

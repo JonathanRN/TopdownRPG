@@ -13,6 +13,7 @@ public class Target : MonoBehaviour {
 	[SerializeField] private GameObject targetFrame;
 
 	private RaycastHit2D[] hits;
+	/*private AutoAttack autoAttack;*/
 	
 	public event TargetUiChangeEventHandler OnChangeUi;
 
@@ -23,13 +24,38 @@ public class Target : MonoBehaviour {
 
 	private void Awake()
 	{
+		InitializeComponents();
 		UpdateTargetUi();
+	}
+
+	private void InitializeComponents()
+	{
+/*
+		autoAttack = GameObject.FindWithTag(Tags.Player).GetComponentInChildren<AutoAttack>();
+*/
 	}
 
 	void Update()
 	{
 		DetectAndSetTargetOnClick();
+		//StartPlayerAutoAttackOn(Input.GetMouseButton(1));
 	}
+
+	/*private void StartPlayerAutoAttackOn(bool input)
+	{
+		if (!input && !autoAttack.IsAttacking) return;
+		
+		if (IsTargetableUnderMouse())
+		{
+			InstantiateTarget();
+			UpdateTargetUi();
+			autoAttack.AutoAttackAtTarget();
+		}
+		else
+		{
+			RemoveTarget();
+		}
+	}*/
 
 	private void DetectAndSetTargetOnClick()
 	{

@@ -24,6 +24,8 @@ public class TargetCastBar : MonoBehaviour
 		castBar = GetComponentInChildren<Slider>();
 		target = GameObject.FindWithTag(Tags.GameController).GetComponent<Target>();
 		InitializeTextComponents();
+		
+		HideTargetCastBar();
 	}
 
 	private void InitializeTextComponents()
@@ -49,7 +51,7 @@ public class TargetCastBar : MonoBehaviour
 	private void UpdateValues()
 	{
 		if (!target.IsSomethingTargeted()) return;
-
+		
 		//TODO this is bad, find a solution
 		cast = target.currentTarget.GetComponentInChildren<Cast>();
 		
@@ -61,5 +63,12 @@ public class TargetCastBar : MonoBehaviour
 		castBar.value = (cast.CastTimeLeft * 100f) / cast.GetCastableCastTime();
 		castableName.text = "Casting: " + cast.GetCastableName();
 		castTimeLeft.text = cast.CastTimeLeft.ToString("0.##");
+	}
+
+	private void HideTargetCastBar()
+	{
+		castTimeLeft.gameObject.SetActive(false);
+		castBar.gameObject.SetActive(false);
+		castableName.gameObject.SetActive(false);
 	}
 }

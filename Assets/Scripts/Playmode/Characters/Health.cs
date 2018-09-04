@@ -7,7 +7,7 @@ public class Health : MonoBehaviour {
 	
 	[Header("Variables")] 
 	[SerializeField] private int maxHealth;
-	[SerializeField] private int healthPoints;
+	private int healthPoints;
 
 	private Target target;
 	private HitSensor hitSensor;
@@ -50,7 +50,7 @@ public class Health : MonoBehaviour {
 		hitSensor.OnHit -= Hit;
 	}
 
-	private void Hit(int hit)
+	public void Hit(int hit)
 	{
 		HealthPoints -= hit;
 
