@@ -35,13 +35,13 @@ public class RootMover : Mover
 	public override void MoveTowardsTarget(Transform target)
 	{
 		Move(new Vector3(0, 1));
-		RotateTowardsTarget(target);
+		RotateTowardsTarget(target.position);
 	}
 
-	public override void RotateTowardsTarget(Transform target)
+	public override void RotateTowardsTarget(Vector3 target)
 	{
-		var vectorBetweenEnemy = new Vector3(rootTransform.position.x - target.transform.position.x,
-			rootTransform.position.y - target.transform.position.y);
+		var vectorBetweenEnemy = new Vector3(rootTransform.position.x - target.x,
+			rootTransform.position.y - target.y);
 		if (Vector3.Dot(vectorBetweenEnemy, rootTransform.right) < -0.5)
 		{
 			Rotate(1f * Time.deltaTime);
@@ -73,10 +73,10 @@ public class RootMover : Mover
 		spriteToRotate.rotation = Quaternion.LookRotation(Vector3.forward, perpendicular);
 	}
 
-	public override void MoveToExactTarget(Transform target)
+	public override void MoveToExactTarget(Vector3 target)
 	{
 		rootTransform.position = Vector2.MoveTowards(new Vector2(rootTransform.position.x, rootTransform.position.y),
-			target.position, moveSpeed * Time.deltaTime);
+			target, moveSpeed * Time.deltaTime);
 		RotateTowardsTarget(target);
 	}
 }

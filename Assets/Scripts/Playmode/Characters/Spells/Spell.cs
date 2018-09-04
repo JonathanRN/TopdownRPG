@@ -65,7 +65,7 @@ public class Spell : MonoBehaviour
 
 	private void MoveSpellTowardsPlayer()
 	{
-		mover.MoveToExactTarget(player.transform);
+		mover.MoveToExactTarget(player.transform.position);
 	}
 
 	private void MoveSpellTowardsEnemy()
@@ -80,6 +80,6 @@ public class Spell : MonoBehaviour
 			Destroy(transform.parent.gameObject);
 			return;
 		}
-		mover.MoveToExactTarget(lastTarget.transform);
+		mover.MoveToExactTarget(lastTarget.transform.position);
 	}
 }

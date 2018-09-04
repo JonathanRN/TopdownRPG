@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
 		{
 			if (IsEnemyType(EnemyType.Melee))
 			{
-				mover.MoveToExactTarget(player.transform);
+				mover.MoveToExactTarget(player.transform.position);
 				
 				if (autoAttack.IsAttacking) return;
 				autoAttack.AutoAttackAtPlayer();

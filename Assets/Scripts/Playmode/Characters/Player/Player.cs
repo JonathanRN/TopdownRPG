@@ -8,8 +8,10 @@ public class Player : MonoBehaviour
 	private Spell _spell;
 	private Mover mover;
 	private Target target;
-	private SpriteRenderer spriteRenderer;
+	private Animator animator;
 
+	private MouseTarget mouseTarget;
+	
 	private void Awake()
 	{
 		InitializeComponents();
@@ -20,7 +22,8 @@ public class Player : MonoBehaviour
 		cast = GetComponent<Cast>();
 		mover = GetComponent<RootMover>();
 		target = GameObject.FindWithTag(Tags.GameController).GetComponent<Target>();
-		spriteRenderer = transform.root.GetComponentInChildren<SpriteRenderer>();
+		mouseTarget = GameObject.FindWithTag(Tags.GameController).GetComponent<MouseTarget>();
+		animator = transform.root.GetComponentInChildren<Animator>();
 	}
 
 	private void Update()
@@ -38,46 +41,35 @@ public class Player : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
 			cast.CastSpellAtAttackableTarget(Spells.Fireball);
+			//InterruptMoving();
 		}
 		else if (Input.GetKeyDown(KeyCode.Alpha2))
 		{
 			cast.CastSpellAtAttackableTarget(Spells.Frostbolt);
+			//InterruptMoving();
 		}
 	}
 
 	private void ProcessPlayerMovement()
 	{
-		if (Input.GetKey(KeyCode.A))
+		if (mouseTarget.IsMouseTargetSet())
 		{
-			mover.Move(Vector3.left);
+			mover.MoveToExactTarget(mouseTarget.GetLastMouseTarget().transform.position);
 			cast.InterruptCasting();
-		}
-		if (Input.GetKey(KeyCode.D))
-		{
-			mover.Move(Vector3.right);
-			cast.InterruptCasting();
-		}
-		if (Input.GetKey(KeyCode.W))
-		{
-			mover.Move(Vector3.up);
-			cast.InterruptCasting();
-		}
-		if (Input.GetKey(KeyCode.S))
-		{
-			mover.Move(Vector3.down);
-			cast.InterruptCasting();
+			animator.SetBool("IsRunning", true);
 		}
 	}
 
 	private void UpdatePlayerRotation()
 	{
-		if (target.IsSomethingTargeted())
+		if (cast.IsCasting)
 		{
-			mover.RotateSpriteTowardsTarget(target.currentTarget.transform.root, spriteRenderer.gameObject.transform);
+			mover.RotateSpriteTowardsTarget(target.currentTarget.transform.root, transform.root);
 		}
 		else
 		{
-			mover.RotateSpriteTowardsMouse(spriteRenderer.gameObject.transform);
+			if (!mouseTarget.IsMouseTargetSet()) return;
+			mover.RotateTowardsTarget(mouseTarget.GetLastMouseTarget().transform.position);
 		}
 	}
 }

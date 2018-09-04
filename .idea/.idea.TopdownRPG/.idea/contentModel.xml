@@ -22,6 +22,7 @@
               <e p="Mover.cs" t="Include" />
               <e p="Player" t="Include">
                 <e p="HandController.cs" t="Include" />
+                <e p="MouseTarget.cs" t="Include" />
                 <e p="Player.cs" t="Include" />
               </e>
               <e p="Resource.cs" t="Include" />
